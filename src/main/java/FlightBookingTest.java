@@ -1,9 +1,11 @@
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -17,15 +19,16 @@ import java.util.List;
 public class FlightBookingTest {
 
     WebDriver driver = new ChromeDriver();
-    Integer timeoutInSeconds = 15;
+    Integer maxWaitTimeoutInSeconds = 15;
+    String baseUrl = "https://www.cleartrip.com/";
 
 
     @Test
     public void testThatResultsAppearForAOneWayJourney() {
 
         setDriverPath();
-        driver.get("https://www.cleartrip.com/");
-        waitFor(2000);
+        driver.get(baseUrl);
+        waitForPageLoaded();
         
         waitForElement(By.id("OneWay"));
         driver.findElement(By.id("OneWay")).click();
@@ -34,8 +37,6 @@ public class FlightBookingTest {
         driver.findElement(By.id("FromTag")).sendKeys("Bangalore");
 
         //wait for the auto complete options to appear for the origin
-
-        waitFor(2000);
         waitForElement(By.id("ui-id-1"));
         List<WebElement> originOptions = driver.findElement(By.id("ui-id-1")).findElements(By.tagName("li"));
         originOptions.get(0).click();
@@ -44,8 +45,6 @@ public class FlightBookingTest {
         driver.findElement(By.id("ToTag")).sendKeys("Delhi");
 
         //wait for the auto complete options to appear for the destination
-
-        waitFor(2000);
         waitForElement(By.id("ui-id-2"));
         //select the first item from the destination auto complete list
         List<WebElement> destinationOptions = driver.findElement(By.id("ui-id-2")).findElements(By.tagName("li"));
@@ -56,14 +55,38 @@ public class FlightBookingTest {
         //all fields filled in. Now click on search
         driver.findElement(By.id("SearchBtn")).click();
 
-        waitFor(5000);
+        
         //verify that result appears for the provided journey search
+        waitForElement(By.className("searchSummary"));
         Assert.assertTrue(isElementPresent(By.className("searchSummary")));
 
         //close the browser
         driver.quit();
 
     }
+    
+    //This function will wait for the page to load till the time specified 
+    public void waitForPageLoaded(Integer timeoutInSeconds) {
+        ExpectedCondition<Boolean> expectation = new
+                ExpectedCondition<Boolean>() {
+                    public Boolean apply(WebDriver driver) {
+                        return ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
+                    }
+                };
+        try {
+            Thread.sleep(1000);
+            WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
+            wait.until(expectation);
+        } catch (Throwable error) {
+            Assert.fail("Timeout waiting for Page Load Request to complete.");
+        }
+    }
+    
+    //This function will wait for the page to load till default time
+    public void waitForPageLoaded() {
+    		waitForPageLoaded(maxWaitTimeoutInSeconds);
+    }
+    
 	public boolean waitForElement(By by, Integer timeoutInSeconds) {
 		WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
 		//to nullify exceptions
@@ -77,7 +100,7 @@ public class FlightBookingTest {
 	//[overloading] - to make 'timeoutInSeconds' as optional parameter
 	public boolean waitForElement(By by)
 	{
-		return waitForElement(by,timeoutInSeconds);
+		return waitForElement(by, maxWaitTimeoutInSeconds);
 	}
 
     private void waitFor(int durationInMilliSeconds) {
