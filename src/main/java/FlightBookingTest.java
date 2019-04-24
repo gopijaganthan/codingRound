@@ -36,6 +36,7 @@ public class FlightBookingTest {
         //wait for the auto complete options to appear for the origin
 
         waitFor(2000);
+        waitForElement(By.id("ui-id-1"));
         List<WebElement> originOptions = driver.findElement(By.id("ui-id-1")).findElements(By.tagName("li"));
         originOptions.get(0).click();
 
@@ -45,6 +46,7 @@ public class FlightBookingTest {
         //wait for the auto complete options to appear for the destination
 
         waitFor(2000);
+        waitForElement(By.id("ui-id-2"));
         //select the first item from the destination auto complete list
         List<WebElement> destinationOptions = driver.findElement(By.id("ui-id-2")).findElements(By.tagName("li"));
         destinationOptions.get(0).click();
@@ -72,7 +74,7 @@ public class FlightBookingTest {
 		return isElementPresent(by);
 	}
 	
-	//[overloading] - to make 'timeoutInSeconds' as opational parameter
+	//[overloading] - to make 'timeoutInSeconds' as optional parameter
 	public boolean waitForElement(By by)
 	{
 		return waitForElement(by,timeoutInSeconds);
