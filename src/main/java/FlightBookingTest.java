@@ -4,7 +4,9 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -15,6 +17,7 @@ import java.util.List;
 public class FlightBookingTest {
 
     WebDriver driver = new ChromeDriver();
+    Integer timeoutInSeconds = 15;
 
 
     @Test
@@ -23,6 +26,8 @@ public class FlightBookingTest {
         setDriverPath();
         driver.get("https://www.cleartrip.com/");
         waitFor(2000);
+        
+        waitForElement(By.id("OneWay"));
         driver.findElement(By.id("OneWay")).click();
 
         driver.findElement(By.id("FromTag")).clear();
@@ -57,7 +62,21 @@ public class FlightBookingTest {
         driver.quit();
 
     }
-
+	public boolean waitForElement(By by, Integer timeoutInSeconds) {
+		WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
+		//to nullify exceptions
+		try {
+			wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+		} catch(Exception e){
+		}
+		return isElementPresent(by);
+	}
+	
+	//[overloading] - to make 'timeoutInSeconds' as opational parameter
+	public boolean waitForElement(By by)
+	{
+		return waitForElement(by,timeoutInSeconds);
+	}
 
     private void waitFor(int durationInMilliSeconds) {
         try {
