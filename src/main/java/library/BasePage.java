@@ -1,18 +1,15 @@
 package library;
 
-import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.Reporter;
 
 public class BasePage{
     Integer maxWaitTimeoutInSeconds = 15;
@@ -40,10 +37,10 @@ public class BasePage{
     }
     
     //This function will wait for the page to load till default time
-    public void waitForPageLoaded() {
+    public void waitForPageToLoad() {
     		waitForPageLoaded(maxWaitTimeoutInSeconds);
     }
-    
+   
 	public boolean waitForElement(By by, Integer timeoutInSeconds) {
 		WebDriverWait wait = new WebDriverWait(Driver.getDriver(), timeoutInSeconds);
 		//to nullify exceptions
@@ -68,10 +65,13 @@ public class BasePage{
         }
     }
 
+    private WebElement findElement(By by) {
+    		return Driver.getDriver().findElement(by);
+    }
 
     private boolean isElementPresent(By by) {
         try {
-        		Driver.getDriver().findElement(by);
+        		findElement(by);
             return true;
         } catch (NoSuchElementException e) {
             return false;
@@ -80,20 +80,29 @@ public class BasePage{
     
     private void navigateTo(String url) {
     		Driver.getDriver().get(url);
-    		waitForPageLoaded();
+    		waitForPageToLoad();
     }
     
-    public void click(By by) {
-		Driver.getDriver().findElement(this.by).clear();
-}
+    public void click(WebElement element) {
+    		element.clear();
+    }
     
-    public void clear(By by) {
-    		Driver.getDriver().findElement(this.by).clear();
+    public void clear(WebElement element) {
+    		element.clear();
     }
     
     public void sendKeys(By by, String textToEnter) {
-		Driver.getDriver().findElement(this.by).sendKeys(textToEnter);
+    		findElement(by).sendKeys(textToEnter);
 	}
-
+    
+    public WebDriver getCurrentDriver() {
+    		return Driver.getDriver();
+    }    
+    
+    public void select(WebElement selectElement, String valueToSelect) {
+//    		new Select(this.sele).selectByVisibleText("1 room, 2 adults");
+//		Driver.getDriver().findElement(this.by).select(valueToSelect);
+	}
+    
     
 }
