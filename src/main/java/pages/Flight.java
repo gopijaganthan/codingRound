@@ -1,10 +1,6 @@
 package pages;
 
-
-import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -14,7 +10,7 @@ import library.Driver;
 public class Flight extends BasePage{
 
 	public Flight() {
-		PageFactory.initElements(Driver.getDriver(), this);
+		PageFactory.initElements(getCurrentDriver(), this);
 	}
 	
 	@FindBy(id = "OneWay")
@@ -43,14 +39,14 @@ public class Flight extends BasePage{
 	    	fromTextBox.clear();
 	    	fromTextBox.sendKeys(from);
 	    	// select the first option
-	    	Driver.getDriver().findElement(By.id("ui-id-1")).findElements(By.tagName("li")).get(0).click();
+	    	getCurrentDriver().findElement(By.id("ui-id-1")).findElements(By.tagName("li")).get(0).click();
     }
     
     public void enterTo(String to){
     		toTextBox.clear();
     		toTextBox.sendKeys(to);
     		// select the first option
-    		Driver.getDriver().findElement(By.id("ui-id-2")).findElements(By.tagName("li")).get(0).click();
+    		getCurrentDriver().findElement(By.id("ui-id-2")).findElements(By.tagName("li")).get(0).click();
     }
     
     
