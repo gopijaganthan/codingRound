@@ -31,6 +31,12 @@ public class Flight extends BasePage{
     @FindBy(className = "searchSummary")
     private WebElement searchSummary;
     
+    @FindBy(xpath = "//ul[@id='ui-id-1']//li")
+    private WebElement SuggestedFrom;
+    
+    @FindBy(xpath = "//ul[@id='ui-id-2']//li")
+    private WebElement suggestedTo;
+    
     public void clickOneWay(){
     		oneWayRadio.click();
     }
@@ -39,14 +45,14 @@ public class Flight extends BasePage{
 	    	fromTextBox.clear();
 	    	fromTextBox.sendKeys(from);
 	    	// select the first option
-	    	getCurrentDriver().findElement(By.id("ui-id-1")).findElements(By.tagName("li")).get(0).click();
+	    	SuggestedFrom.click();
+	    	fromTextBox.click();
     }
     
     public void enterTo(String to){
     		toTextBox.clear();
     		toTextBox.sendKeys(to);
-    		// select the first option
-    		getCurrentDriver().findElement(By.id("ui-id-2")).findElements(By.tagName("li")).get(0).click();
+    		suggestedTo.click();
     }
     
     

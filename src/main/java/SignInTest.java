@@ -1,17 +1,13 @@
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import com.sun.jna.Platform;
-
 import library.Driver;
 import pages.ClearTrip;
-import pages.SignIn;;
+import pages.SignIn;
 
 public class SignInTest {
 	WebDriver driver;

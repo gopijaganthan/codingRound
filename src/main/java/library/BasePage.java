@@ -7,7 +7,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
@@ -97,12 +96,6 @@ public class BasePage{
     
     public WebDriver getCurrentDriver() {
     		return Driver.getDriver();
-    }    
-    
-    public void select(WebElement selectElement, String valueToSelect) {
-//    		new Select(this.sele).selectByVisibleText("1 room, 2 adults");
-//		Driver.getDriver().findElement(this.by).select(valueToSelect);
-	}
-    
+    }
     
 }
