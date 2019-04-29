@@ -66,14 +66,14 @@ Should be in @Beforeall Annotation
 
 **Technology stack:** *Java, Selenium, TestNG, Maven*
 
-I wanted this framework to be more maintainable and reliable, 
+I wanted this framework to be more maintainable and reliable. 
 	- Have categorize page element & reusable from test script.
 	- Used floating driver for more maintainability
 	- Removed static timeouts.
 
 I have modified the script with following changes
 
-###Files Added:
+ ######Files Added:
 - /codoingRound/src/main/java/library/BasePage.java
 - /codoingRound/src/main/java/library/Driver.java
 - /codoingRound/src/main/java/pages/ClearTrip.java
@@ -81,7 +81,7 @@ I have modified the script with following changes
 - /codoingRound/src/main/java/pages/Hotel.java
 - /codoingRound/src/main/java/pages/SignIn.java
 
-###Files Modified:
+######Files Modified:
 - /codoingRound/src/main/java/FlightBookingTest.java
 - /codoingRound/src/main/java/HotelBookingTest.java
 - /codoingRound/src/main/java/SignInTest.java
