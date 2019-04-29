@@ -66,10 +66,10 @@ Should be in @Beforeall Annotation
 
 **Technology stack:** *Java, Selenium, TestNG, Maven*
 
-I wanted this framework to be more maintainable and reliable.__
-	- Have categorize page element & reusable from test script.__
-	- Used floating driver for more maintainability__
-	- Removed static timeouts.__
+I wanted this framework to be more maintainable and reliable.  <br />
+  - Have categorize page element & reusable from test script.
+  - Used floating driver for more maintainability
+  - Removed static timeouts.
 
 I have modified the script with following changes
 
@@ -89,12 +89,13 @@ I have modified the script with following changes
 ![picture](floatingDriver.jpg)
 
 **Road map items (Features):**
-- Generate test report
-- Email report to the team
-- log results into Test management tools.
-- Facilitate to test API.
-- Facilitate to test services.
-- Facilitate to Mock services.
+> Generate test report
+> Email report to the team
+> log results into Test management tools.
+> Facilitate to test API.
+> Facilitate to test services.
+> Facilitate to Mock services.
+> Find and ignore flaky tests.
 
  
 ref: https://subscription.packtpub.com/book/web_development/9781788473576/1/ch01lvl1sec11/the-singleton-driver-class
