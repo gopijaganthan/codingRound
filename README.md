@@ -1,29 +1,102 @@
 # TestVagrant hiring challenge for applicants 
+### Code review
 
-About the codebase:
----------------------------------
-*This is a simple test project for testing a few scenarios on a sample flight/hotel booking website. There are **3 tests** in total spread over 3 test classes. Following tech stack has been used to develop the same.*
+* Liner frameworks is easy to understand, need to updated it other framework.
+* try "not" to hard code the values inside script file. should make it to read from excel or some data file.
+	( For eg: "https://www.cleartrip.com/", "Delhi")
+* Could have added functionality to handle Multiple browser.
+* Could have moved reusable methods like "setDriverPath" to common file, so that we can have less maintainability.
 
-**Tech Stack:** *Java*  *Selenium* *TestNG*  *Gradle/Maven*
 
-Problem Statement
-----------------------------------
-**Tasks:**
+**FlightBookingTest.java**
 
-1. Test are failing which needs your expertise to fix it.
-2. Review and point out design issues with the current codebase/framework, if any.
-3. Improve/refactor the code to implement your suggestions.
+- waitFor(2000);
+* using static timeout would lead to flaky test, we should use methods 'waitForElement' instead
 
-**Expectation:**
-1. Create a GitHub account if not existing already.
-2. Fork this repo (DO NOT CLONE).
-3. Fix the errors and refactor the code, consider **abstractions, reusability and maintenance.**
-4. Make sure you make multiple check-ins in the process, we would love to see your progress bit by bit.
-5. Also check-in a separate file where you should list all your code review comments.
-6. Send us the link of your GitHub repo to **careers@testvagrant.com**. Also attach your **resume**.
+- driver.findElement(By.id("OneWay")).click();
+* Selenium Actions could be moved to separate files, for maintainability,
+* Locators could be moved to separate files(POM), where elements are reused and maintained easily
 
-**The parameters of evaluation:**
-1. Naming Conventions & readability of code
-2. Modularization & Abstraction
-3. Demonstration of OO concepts & Design Patterns
-4. Etiquette of Version control
+- driver.findElement(By.xpath("//*[@id='ui-datepicker-div']/div[1]/table/tbody/tr[3]/td[7]/a")).click();
+* can avoid index, Since they have greater probability of change, during enhancements
+
+- Assert.assertTrue(isElementPresent(By.className("searchSummary")));
+* can have some comment messages on failures, which will make others to understand the failures. also help reports more readable
+
+
+- private void waitFor(int durationInMilliSeconds) {
+        try {
+            Thread.sleep(durationInMilliSeconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
+
+* could have designed this method to wait for element, instead static wait shoudl move to some resuable folder
+
+private boolean isElementPresent(By by) {
+        try {
+            driver.findElement(by);
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+* Though this method Looks good, could have added default parameter to handle wait also raise 
+
+
+**HotelBookingTest.java**
+
+
+- WebDriver driver = new ChromeDriver();
+* should initialise in common component 
+
+- localityTextBox.sendKeys("Indiranagar, Bangalore");
+could have read values from data sheets, or other mode
+
+
+**SignInTest.java**
+
+- driver.quit();
+on the test files will kill the driver, which will drivers unavailable for other tests.
+-  WebDriver driver = new ChromeDriver();
+Should be in @Beforeall Annotation
+
+
+**Technology stack:** *Java, Selenium, TestNG, Maven*
+
+I wanted this framework to be more maintainable and reliable, 
+	- Have categorize page element & reusable from test script.
+	- Used floating driver for more maintainability
+	- Removed static timeouts.
+
+I have modified the script with following changes
+
+###Files Added:
+- /codoingRound/src/main/java/library/BasePage.java
+- /codoingRound/src/main/java/library/Driver.java
+- /codoingRound/src/main/java/pages/ClearTrip.java
+- /codoingRound/src/main/java/pages/Flight.java
+- /codoingRound/src/main/java/pages/Hotel.java
+- /codoingRound/src/main/java/pages/SignIn.java
+
+###Files Modified:
+- /codoingRound/src/main/java/FlightBookingTest.java
+- /codoingRound/src/main/java/HotelBookingTest.java
+- /codoingRound/src/main/java/SignInTest.java
+	
+![picture](floatingDriver.jpg)
+
+
+##Road map items (Features):
+- Generate test report
+- Email report to the team
+- log results into Test management tools.
+- Facilitate to test API.
+- Facilitate to test services.
+- Facilitate to Mock services.
+
+ 
+ref: https://subscription.packtpub.com/book/web_development/9781788473576/1/ch01lvl1sec11/the-singleton-driver-class
+ 
