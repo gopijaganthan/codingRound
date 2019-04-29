@@ -90,12 +90,19 @@ I have modified the script with following changes
 
 **Road map items (Features):**
 > Generate test report
+
 > Email report to the team
+
 > log results into Test management tools.
+
 > Facilitate to test API.
+
 > Facilitate to test services.
+
 > Facilitate to Mock services.
+
 > Find and ignore flaky tests.
+
 
  
 ref: https://subscription.packtpub.com/book/web_development/9781788473576/1/ch01lvl1sec11/the-singleton-driver-class
